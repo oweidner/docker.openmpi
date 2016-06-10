@@ -1,10 +1,11 @@
-mpi_head:
-  image: openmpi
-  ports: 
-   - "22"
-  links: 
-   - mpi_node
+version: "2"
 
-mpi_node: 
-  image: openmpi
-
+services:
+  mpi_head:
+    image: openmpi
+    ports: 
+     - "22"
+    links: 
+      - mpi_node
+  mpi_node: 
+    image: openmpi
