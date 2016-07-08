@@ -17,9 +17,10 @@ before_install:
 
 script:
   - docker-compose scale mpi_head=1 mpi_node=3 # &> logfile &
+  - docker-compose exec --privileged mpi_head ./run_tests
   # - docker-compose up &> logfile &
   # - sleep 240
-  - docker network ls
+  # - docker network ls
   # # # shut down docker-compose
   - docker-compose down
   # - cat logfile
