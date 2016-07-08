@@ -14,5 +14,6 @@ build:
 	docker build -t $(TAG) .
 
 main:
+	# docker network create -d bridge mynet
 	docker-compose scale mpi_head=1 mpi_node=3
 	# docker-compose down
