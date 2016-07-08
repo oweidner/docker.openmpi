@@ -17,8 +17,8 @@ before_install:
   - sudo chmod +x /usr/local/bin/docker-compose
 
 script:
-  - cd /home/mpirun/mpi4py_benchmarks
   - docker-compose scale mpi_head=1 mpi_node=${NNODES} # &> logfile &
+  - cd /home/mpirun/mpi4py_benchmarks
   - docker-compose exec --privileged mpi_head /bin/bash -c ./home/mpirun/mpi4py_benchmarks/run_tests.sh ${NNODES}
   # - docker-compose up &> logfile &
   # - sleep 240
