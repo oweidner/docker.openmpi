@@ -16,10 +16,10 @@ before_install:
   - sudo chmod +x /usr/local/bin/docker-compose
 
 script:
-  - docker-compose scale mpi_head=1 mpi_node=3 &> logfile &
+  - docker-compose scale mpi_head=1 mpi_node=3 # &> logfile &
   # - docker-compose up &> logfile &
-  - sleep 60
+  # - sleep 240
   - docker network ls
   # # # shut down docker-compose
   - docker-compose down
-  - cat logfile
+  # - cat logfile
