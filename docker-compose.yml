@@ -1,10 +1,12 @@
 mpi_head:
-  image: openmpi
+  build: .
+  # image: openmpi
   ports: 
-   - "22"
+    - "22"
   links: 
-   - mpi_node
+    - mpi_node
 
-mpi_node: 
-  image: openmpi
+mpi_node:
+  build: .
+  # image: openmpi
 
