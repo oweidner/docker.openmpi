@@ -18,5 +18,5 @@ build:
 main:
 	# docker network create -d bridge mynet
 	docker-compose scale mpi_head=1 mpi_node=${NNODES}
-	docker-compose exec --privileged mpi_head /bin/bash -c run_tests.sh ${NNODES}
+	docker-compose exec --privileged mpi_head /bin/bash -c ./home/mpirun/mpi4py_benchmarks/run_tests.sh ${NNODES}
 	docker-compose down
