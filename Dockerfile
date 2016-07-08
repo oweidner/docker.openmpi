@@ -9,8 +9,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -y && \
     apt-get upgrade -y && \
-    apt-get install -y openssh-server python-mpi4py python-numpy \
-            python-virtualenv python-scipy gcc gfortran openmpi-checkpoint binutils
+    apt-get install -y --no-install-recommends openssh-server python-mpi4py python-numpy python-virtualenv python-scipy gcc gfortran openmpi-checkpoint binutils
 
 RUN mkdir /var/run/sshd
 RUN echo 'root:mpirun' | chpasswd
