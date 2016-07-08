@@ -2,6 +2,9 @@
 
 NNODES=$1
 
+pwd
+ls -lsA
+
 mpirun -n ${NNODES} python matrix_vector_product.py
 mpirun -n ${NNODES} python osu_bibw.py
 mpirun -n ${NNODES} python osu_bw.py
