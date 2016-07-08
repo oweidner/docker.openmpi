@@ -3,9 +3,15 @@
 
 FROM ubuntu:14.04
 # FROM phusion/baseimage
-MAINTAINER Ole Weidner <ole.weidner@ed.ac.uk>
 
-ENV DEBIAN_FRONTEND noninteractive
+MAINTAINER Marco Zocca <zocca marco gmail>
+# based on `docker.openmpi` by Ole Weidner <ole.weidner@ed.ac.uk>
+
+ENV USER mpirun
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    HOME=/home/${USER} 
+
 
 RUN apt-get update -y && \
     apt-get upgrade -y && \
@@ -25,29 +31,31 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 # Add an 'mpirun' user
 # ------------------------------------------------------------
 
-RUN adduser --disabled-password --gecos "" mpirun && \
-    echo "mpirun ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-ENV HOME /home/mpirun
+RUN adduser --disabled-password --gecos "" ${USER} && \
+    echo "${USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # ------------------------------------------------------------
 # Set-Up SSH with our Github deploy key
 # ------------------------------------------------------------
 
-RUN mkdir /home/mpirun/.ssh/
-ADD ssh/config /home/mpirun/.ssh/config
-ADD ssh/id_rsa.mpi /home/mpirun/.ssh/id_rsa
-ADD ssh/id_rsa.mpi.pub /home/mpirun/.ssh/id_rsa.pub
-ADD ssh/id_rsa.mpi.pub /home/mpirun/.ssh/authorized_keys
+ENV SSHDIR ${HOME}/.ssh/
 
-RUN chmod -R 600 /home/mpirun/.ssh/* && \
-    chown -R mpirun:mpirun /home/mpirun/.ssh
+RUN mkdir -p ${SSHDIR}
+
+ADD ssh/config ${SSHDIR}/config
+ADD ssh/id_rsa.mpi ${SSHDIR}/id_rsa
+ADD ssh/id_rsa.mpi.pub ${SSHDIR}/id_rsa.pub
+ADD ssh/id_rsa.mpi.pub ${SSHDIR}/authorized_keys
+
+RUN chmod -R 600 ${SSHDIR}* && \
+    chown -R ${USER}:${USER} ${SSHDIR}
 
 # ------------------------------------------------------------
 # Copy Rosa's MPI4PY example scripts
 # ------------------------------------------------------------
 
-ADD mpi4py_benchmarks /home/mpirun/mpi4py_benchmarks
-RUN chown mpirun:mpirun /home/mpirun/mpi4py_benchmarks
+ADD mpi4py_benchmarks ${HOME}/mpi4py_benchmarks
+RUN chown ${USER}:${USER} ${HOME}/mpi4py_benchmarks
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]

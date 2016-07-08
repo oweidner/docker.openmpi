@@ -33,8 +33,8 @@ def pprint(str="", end="\n", comm=MPI.COMM_WORLD):
 #=============================================================================
 # Main
 
-size = 10000           # lengt of vector v
-iter = 2000            # number of iterations to run
+size = 10000           # length of vector v
+iter = 20              # number of iterations to run
 
 counter = 0
 

@@ -16,4 +16,5 @@ build:
 main:
 	# docker network create -d bridge mynet
 	docker-compose scale mpi_head=1 mpi_node=3
-	# docker-compose down
+	docker-compose exec --privileged mpi_head ./run_tests
+	docker-compose down
