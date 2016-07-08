@@ -47,6 +47,8 @@ ADD ssh/id_rsa.mpi ${SSHDIR}/id_rsa
 ADD ssh/id_rsa.mpi.pub ${SSHDIR}/id_rsa.pub
 ADD ssh/id_rsa.mpi.pub ${SSHDIR}/authorized_keys
 
+
+
 RUN chmod -R 600 ${SSHDIR}* && \
     chown -R ${USER}:${USER} ${SSHDIR}
 
@@ -56,6 +58,10 @@ RUN chmod -R 600 ${SSHDIR}* && \
 
 ADD mpi4py_benchmarks ${HOME}/mpi4py_benchmarks
 RUN chown ${USER}:${USER} ${HOME}/mpi4py_benchmarks
+
+ADD run_rests.sh ${HOME}/mpi4py_benchmarks
+
+
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
