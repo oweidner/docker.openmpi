@@ -2,6 +2,8 @@ AUTH=ocramz
 NAME=docker-openmpi
 TAG=${AUTH}/${NAME}
 
+NNODES=2
+
 .DEFAULT_GOAL := help
 
 help:
@@ -15,6 +17,6 @@ build:
 
 main:
 	# docker network create -d bridge mynet
-	docker-compose scale mpi_head=1 mpi_node=3
-	docker-compose exec --privileged mpi_head /bin/bash -c run_tests.sh
+	docker-compose scale mpi_head=1 mpi_node=${NNODES}
+	docker-compose exec --privileged mpi_head /bin/bash -c run_tests.sh ${NNODES}
 	docker-compose down

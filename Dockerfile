@@ -59,6 +59,7 @@ RUN chmod -R 600 ${SSHDIR}* && \
 ADD mpi4py_benchmarks ${HOME}/mpi4py_benchmarks
 RUN chown ${USER}:${USER} ${HOME}/mpi4py_benchmarks
 
+
 ADD run_tests.sh ${HOME}/mpi4py_benchmarks
 
 

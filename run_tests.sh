@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NNODES=2
+NNODES=$1
 
 echo ${HOME}
 
