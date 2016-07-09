@@ -18,7 +18,7 @@ RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openssh-server python-mpi4py python-numpy python-virtualenv python-scipy gcc gfortran openmpi-checkpoint binutils
 
 RUN mkdir /var/run/sshd
-RUN echo 'root:mpirun' | chpasswd
+RUN echo 'root:${USER}' | chpasswd
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # SSH login fix. Otherwise user is kicked off after login
