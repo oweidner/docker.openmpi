@@ -21,5 +21,5 @@ rebuild:
 
 main:
 	docker-compose scale mpi_head=1 mpi_node=${NNODES}
-	docker-compose exec --privileged mpi_head /bin/bash -c ./home/mpirun/mpi4py_benchmarks/run_tests.sh ${NNODES}
+	docker-compose exec --privileged mpi_head mpirun -n ${NNODES} python /home/mpirun/mpi4py_benchmarks/all_tests.py
 	docker-compose down

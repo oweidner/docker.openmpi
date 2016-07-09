@@ -18,7 +18,7 @@ processes.
 from __future__ import division
 
 import numpy as np
-from numpy.fft import fft2, ifft2
+# from numpy.fft import fft2, ifft2
 from math import ceil, fabs
 from mpi4py import MPI
 
@@ -34,7 +34,7 @@ def pprint(str="", end="\n", comm=MPI.COMM_WORLD):
 # Main
 
 size = 10000           # length of vector v
-iter = 20              # number of iterations to run
+iter = 2000            # number of iterations to run
 
 counter = 0
 

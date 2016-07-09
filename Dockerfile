@@ -53,7 +53,7 @@ RUN chmod -R 600 ${SSHDIR}* && \
     chown -R ${USER}:${USER} ${SSHDIR}
 
 # ------------------------------------------------------------
-# Copy Rosa's MPI4PY example scripts
+# Copy MPI4PY example scripts
 # ------------------------------------------------------------
 
 ADD mpi4py_benchmarks ${HOME}/mpi4py_benchmarks
