@@ -33,17 +33,23 @@ def pprint(str="", end="\n", comm=MPI.COMM_WORLD):
 #=============================================================================
 # Main
 
-def mvp_main(size=10000, iter=200):
+def mvp_main(BENCHMARH="Matrix-vector multiplication",
+             size=10000,
+             iter=200):
     # size = 10000           # length of vector v
     # iter = 200             # number of iterations to run
 
     counter = 0
 
     comm = MPI.COMM_WORLD
+    myid = comm.Get_rank()
 
     pprint("============================================================================")
     pprint(" Running %d parallel MPI processes" % comm.size)
 
+    if myid == 0:
+        print ('# %s' % (BENCHMARH,))
+    
     my_size = size // comm.size     # Every process computes a vector of lenth *my_size*
     size = comm.size*my_size        # Make sure size is a integer multiple of comm.size
     my_offset = comm.rank*my_size
