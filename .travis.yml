@@ -7,8 +7,10 @@ language:
 services:
   - docker
 
+env:
+  - NNODES=4
+
 before_install:
-  - export NNODES=4
   # # update Docker
   - sudo apt-get update
   - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine wget
@@ -18,11 +20,5 @@ before_install:
 
 script:
   - docker-compose scale mpi_head=1 mpi_node=${NNODES} # &> logfile &
-  - cd /home/mpirun/mpi4py_benchmarks
   - docker-compose exec --privileged mpi_head /bin/bash -c ./home/mpirun/mpi4py_benchmarks/run_tests.sh ${NNODES}
-  # - docker-compose up &> logfile &
-  # - sleep 240
-  # - docker network ls
-  # # # shut down docker-compose
   - docker-compose down
-  # - cat logfile
