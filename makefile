@@ -10,7 +10,7 @@ help:
 	@echo "Use \`make <target>\` where <target> is one of"
 	@echo "  help     display this help message"
 	@echo "  build   build from Dockerfile"
-	@echo "  build   rebuild from Dockerfile (ignores cached layers)"
+	@echo "  rebuild rebuild from Dockerfile (ignores cached layers)"
 	@echo "  main    build and docker-compose the whole thing"
 
 build:
