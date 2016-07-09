@@ -43,12 +43,14 @@ $> docker-compose scale mpi_head=1 mpi_worker=3
 Once all containers are running, you can login into the `mpi_head` node and start MPI jobs with `mpirun`. Alternatively, you can execute a one-shot command on that container with the `docker-compose exec` syntax, as follows: 
 
     docker-compose exec --privileged mpi_head mpirun -n 2 python /home/mpirun/mpi4py_benchmarks/all_tests.py
-    -----------------------------------------
-    Execute command on node `mpi-head`
-                                              -----------
-					                 run on 2 MPI ranks
-					                  --------------------------------------------------
-							            Command to run (NB: the Python script needs to import MPI bindings)
+    ----------------------------------------- ----------- --------------------------------------------------
+    1.                                        2.          3.
+
+Breaking the above command down:
+
+    1. Execute command on node `mpi-head`
+    2. run on 2 MPI ranks
+    3. Command to run (NB: the Python script needs to import MPI bindings)
 
 ## Testing
 
