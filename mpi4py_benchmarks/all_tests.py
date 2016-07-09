@@ -305,4 +305,4 @@ if __name__ == '__main__':
         osu_bibw()
     else:
         if myid==0:
-            print ("OSU examples require exactly 2 compute nodes")
+            print ("# Warning ! OSU examples require MPI rank size == 2. Not running since rank size = %d" % (numprocs))
