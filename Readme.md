@@ -8,11 +8,11 @@ including the MPI4Py Python bindings. The container also runs an OpenSSH server
 so that multiple containers can be linked together and used via `mpirun`.
 
 
-## Start an MPI Container Cluster
+## MPI Container Cluster with `docker-compose`
 
 While containers can in principle be started manually via `docker run`, we suggest that your use 
 [Docker Compose](https://docs.docker.com/compose/), a simple command-line tool 
-to define and run multi-container applications. We provde a sample `docker-compose.yml` file in the repository:
+to define and run multi-container applications. We provide a sample `docker-compose.yml` file in the repository:
 
 ```
 mpi_head:
@@ -26,23 +26,32 @@ mpi_node:
   image: openmpi
 
 ```
+(Note: the above is docker-compose API version 1)
 
 The file defines an `mpi_head` and an `mpi_node`. Both containers run the same `openmpi` image. 
 The only difference is, that the `mpi_head` container exposes its SSH server to 
 the host system, so you can log into it to start your MPI applications.
 
 
+## Usage
+
 The following command will start one `mpi_head` container and three `mpi_node` containers: 
 
 ```
 $> docker-compose scale mpi_head=1 mpi_worker=3
 ```
-Once all containers are running, figure out the host port on which Docker exposes the  SSH server of the  `mpi_head` container: 
+Once all containers are running, you can login into the `mpi_head` node and start MPI jobs with `mpirun`. Alternatively, you can execute a one-shot
 
-```
-$> 
-```
+   docker-compose exec --privileged mpi_head mpirun -n 1 python /home/mpirun/mpi4py_benchmarks/all_tests.py
+
+
+## Testing
 
 You can spin up a docker-compose cluster, run a battery of MPI4py tests and remove the cluster using a recipe provided in the included Makefile:
 
     make main
+
+
+## Credits
+
+This repository draws from work on https://github.com/dispel4py/ by O. Weidner and R. Filgueira 
