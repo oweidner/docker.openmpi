@@ -56,9 +56,10 @@ def mvp_main(BENCHMARH="Matrix-vector multiplication",
     
     if myid == 0:
         print ('# %s' % (BENCHMARH,))
+        print(" %d iterations of size %d " % (bs, size))    
         print ('# %-8s%20s' % ("Duration [s]", "Throughput [#/s]"))
 
-    pprint(" %d iterations of size %d " % (bs, size))    
+    # pprint(" %d iterations of size %d " % (bs, size))    
     
 
 
