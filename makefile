@@ -10,10 +10,14 @@ help:
 	@echo "Use \`make <target>\` where <target> is one of"
 	@echo "  help     display this help message"
 	@echo "  build   build from Dockerfile"
+	@echo "  build   rebuild from Dockerfile (ignores cached layers)"
 	@echo "  main    build and docker-compose the whole thing"
 
 build:
 	docker build -t $(TAG) .
+
+rebuild:
+	docker build --no-cache -t $(TAG) .
 
 main:
 	docker-compose scale mpi_head=1 mpi_node=${NNODES}
