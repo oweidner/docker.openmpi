@@ -8,7 +8,7 @@ services:
   - docker
 
 env:
-  - NNODES=4
+  - NNODES=2
 
 before_install:
   # # update Docker
