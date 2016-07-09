@@ -33,7 +33,7 @@ def pprint(str="", end="\n", comm=MPI.COMM_WORLD):
 #=============================================================================
 # Main
 
-def mvp_main(BENCHMARH="Matrix-vector multiplication",
+def mvp_main(BENCHMARH="MPI Matrix action on a vector",
              size=10000,
              iter=200):
     # size = 10000           # length of vector v
@@ -55,8 +55,7 @@ def mvp_main(BENCHMARH="Matrix-vector multiplication",
     bs = 20                         # batch size
     
     if myid == 0:
-        print ('# %s' % (BENCHMARH,))
-        print(" %d iterations of size %d " % (bs, size))    
+        print ('# %s, %d iterations of size %d' % (BENCHMARH, bs, size))
         print ('# %-8s%20s' % ("Duration [s]", "Throughput [#/s]"))
 
     # pprint(" %d iterations of size %d " % (bs, size))    
