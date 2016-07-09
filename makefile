@@ -2,7 +2,7 @@ AUTH=ocramz
 NAME=docker-openmpi
 TAG=${AUTH}/${NAME}
 
-export NNODES=2
+export NNODES=4
 
 .DEFAULT_GOAL := help
 

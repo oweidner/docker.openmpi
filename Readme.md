@@ -10,8 +10,7 @@ so that multiple containers can be linked together and used via `mpirun`.
 
 While containers can in principle be started manually via `docker run`, we suggest that your use 
 [Docker Compose](https://docs.docker.com/compose/), a simple command-line tool 
-to define and run multi-container applications. We provde a sample `docker-compose.yml`
-file in the repository:
+to define and run multi-container applications. We provde a sample `docker-compose.yml` file in the repository:
 
 ```
 mpi_head:
@@ -19,7 +18,7 @@ mpi_head:
   ports: 
    - "22"
   links: 
-   - mpi_worker
+   - mpi_node
 
 mpi_node: 
   image: openmpi
@@ -27,7 +26,7 @@ mpi_node:
 ```
 
 The file defines an `mpi_head` and an `mpi_node`. Both containers run the same `openmpi` image. 
-The only difference is, that the `mpi_head` container exposes its SHH server to 
+The only difference is, that the `mpi_head` container exposes its SSH server to 
 the host system, so you can log into it to start your MPI applications.
 
 
@@ -42,10 +41,6 @@ Once all containers are running, figure out the host port on which Docker expose
 $> 
 ```
 
-Now you know the port, you can login to the `mpi_head` conatiner. The username is `mpirun`:
+You can spin up a docker-compose cluster, run a battery of MPI4py tests and remove the cluster using a recipe provided in the included Makefile:
 
-> TODO: Password
-
- ```
- $> ssh -p 23227 mpirun@localhost
- ```
+    make main
