@@ -54,7 +54,9 @@ RUN chmod -R 600 ${SSHDIR}* && \
 
 # ------------------------------------------------------------
 # Copy MPI4PY example scripts
-# # ------------------------------------------------------------
+# ------------------------------------------------------------
+
+ENV TRIGGER 1
 
 ADD mpi4py_benchmarks ${HOME}/mpi4py_benchmarks
 RUN chown ${USER}:${USER} ${HOME}/mpi4py_benchmarks
