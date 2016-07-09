@@ -1,8 +1,8 @@
 # Build this image:  docker build -t mpi .
 #
 
-# FROM ubuntu:14.04
-FROM phusion/baseimage
+FROM ubuntu:14.04
+# FROM phusion/baseimage
 
 MAINTAINER Ole Weidner <ole.weidner@ed.ac.uk>
 
