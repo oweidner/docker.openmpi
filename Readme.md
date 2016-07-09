@@ -1,5 +1,7 @@
 ## docker.openmpi
 
+Travis CI: [![Build Status](https://travis-ci.org/ocramz/docker.openmpi.svg?branch=master)](https://travis-ci.org/ocramz/docker.openmpi)
+
 With the code in this repository, you can build a Docker container that provides 
 the OpenMPI runtime and tools along with various supporting libaries, 
 including the MPI4Py Python bindings. The container also runs an OpenSSH server
