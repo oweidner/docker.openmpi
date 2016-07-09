@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 NNODES=$1
 
-cd ${HOME}/mpi4py_benchmarks/
+export P=${HOME}/mpi4py_benchmarks/
 
 pwd
 ls -lsA
