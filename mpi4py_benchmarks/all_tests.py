@@ -95,7 +95,7 @@ def mvp_main(BENCHMARH="Matrix-vector multiplication",
         #     (bs, size, t_diff, bs/t_diff)
         # )
         if myid == 0:
-            print ('%-10.1f%20.2f' % (t_diff, bs/t_diff))
+            print ('%-10.3f%20.2f' % (t_diff, bs/t_diff))
 
         counter += bs
 
