@@ -47,12 +47,20 @@ def mvp_main(BENCHMARH="Matrix-vector multiplication",
     pprint("============================================================================")
     pprint(" Running %d parallel MPI processes" % comm.size)
 
+
+    my_size = size // comm.size     # Every process computes a vector of lenth *my_size*
+    size = comm.size*my_size        # size must be integer multiple of comm.size
+    my_offset = comm.rank*my_size
+
+    bs = 20                         # batch size
+    
     if myid == 0:
         print ('# %s' % (BENCHMARH,))
+        print ('# %-8s%20s' % ("Duration [s]", "Throughput [#/s]"))
+
+    pprint(" %d iterations of size %d " % (bs, size))    
     
-    my_size = size // comm.size     # Every process computes a vector of lenth *my_size*
-    size = comm.size*my_size        # Make sure size is a integer multiple of comm.size
-    my_offset = comm.rank*my_size
+
 
     # This is the complete vector
     vec = np.zeros(size)            # Every element zero...
@@ -83,11 +91,13 @@ def mvp_main(BENCHMARH="Matrix-vector multiplication",
         # if fabs(vec[iter]-1.0) > 0.01:
         #     pprint("!! Error: Wrong result!")
 
-        pprint(" %d iterations of size %d in %5.2fs: %5.2f iterations per second" %
-            (20, size, t_diff, 20/t_diff)
-        )
+        # pprint(" %d iterations of size %d in %5.2fs: %5.2f iterations per second" %
+        #     (bs, size, t_diff, bs/t_diff)
+        # )
+        if myid == 0:
+            print ('%-10d%20.2f' % (t_diff, bs/t_diff))
 
-        counter += 20
+        counter += bs
 
 
 
