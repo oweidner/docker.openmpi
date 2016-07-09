@@ -46,9 +46,9 @@ Once all containers are running, you can login into the `mpi_head` node and star
     -----------------------------------------
     Execute command on node `mpi-head`
                                               -----------
-					      run on 2 MPI ranks
+					                 run on 2 MPI ranks
 					                  --------------------------------------------------
-							  Command to run (NB: the Python script needs to import MPI bindings)
+							            Command to run (NB: the Python script needs to import MPI bindings)
 
 ## Testing
 
