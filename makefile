@@ -20,6 +20,11 @@ rebuild:
 	docker build --no-cache -t $(TAG) .
 
 main:
+	# 1 worker node
+	docker-compose scale mpi_head=1 mpi_node=1
+	docker-compose exec --privileged mpi_head mpirun -n 1 python /home/mpirun/mpi4py_benchmarks/all_tests.py
+	docker-compose down
+	# 2 worker nodes
 	docker-compose scale mpi_head=1 mpi_node=${NNODES}
 	docker-compose exec --privileged mpi_head mpirun -n ${NNODES} python /home/mpirun/mpi4py_benchmarks/all_tests.py
 	docker-compose down

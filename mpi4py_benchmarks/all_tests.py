@@ -116,19 +116,11 @@ def osu_latency(
     myid = comm.Get_rank()
     numprocs = comm.Get_size()
 
-    if numprocs != 2:
-        if myid == 0:
-            errmsg = "This test requires exactly two processes"
-        else:
-            errmsg = None
-        raise SystemExit(errmsg)
-
     s_buf = allocate(MAX_MSG_SIZE)
     r_buf = allocate(MAX_MSG_SIZE)
 
     if myid == 0:
         print ('# %s' % (BENCHMARH,))
-    if myid == 0:
         print ('# %-8s%20s' % ("Size [B]", "Latency [us]"))
 
     message_sizes = [0] + [2**i for i in range(30)]
@@ -141,23 +133,23 @@ def osu_latency(
         iterations = list(range(loop+skip))
         s_msg = [s_buf, size, MPI.BYTE]
         r_msg = [r_buf, size, MPI.BYTE]
-        #
+    
         comm.Barrier()
         if myid == 0:
-            for i in iterations:
-                if i == skip:
-                    t_start = MPI.Wtime()
-                comm.Send(s_msg, 1, 1)
-                comm.Recv(r_msg, 1, 1)
-            t_end = MPI.Wtime()
+                for i in iterations:
+                    if i == skip:
+                        t_start = MPI.Wtime()
+                    comm.Send(s_msg, 1, 1)
+                    comm.Recv(r_msg, 1, 1)
+                t_end = MPI.Wtime()
         elif myid == 1:
-            for i in iterations:
-                comm.Recv(r_msg, 0, 1)
-                comm.Send(s_msg, 0, 1)
-        #
+                for i in iterations:
+                    comm.Recv(r_msg, 0, 1)
+                    comm.Send(s_msg, 0, 1)
+
         if myid == 0:
-            latency = (t_end - t_start) * 1e6 / (2 * loop)
-            print ('%-10d%20.2f' % (size, latency))
+                latency = (t_end - t_start) * 1e6 / (2 * loop)
+                print ('%-10d%20.2f' % (size, latency))
 
 def osu_bibw(
     BENCHMARH = "MPI Bi-Directional Bandwidth Test",
@@ -175,19 +167,11 @@ def osu_bibw(
     myid = comm.Get_rank()
     numprocs = comm.Get_size()
 
-    if numprocs != 2:
-        if myid == 0:
-            errmsg = "This test requires exactly two processes"
-        else:
-            errmsg = None
-        raise SystemExit(errmsg)
-
     s_buf = allocate(MAX_MSG_SIZE)
     r_buf = allocate(MAX_MSG_SIZE)
 
     if myid == 0:
         print ('# %s' % (BENCHMARH,))
-    if myid == 0:
         print ('# %-8s%20s' % ("Size [B]", "Bandwidth [MB/s]"))
 
     message_sizes = [2**i for i in range(30)]
@@ -249,19 +233,11 @@ def osu_bw(
     myid = comm.Get_rank()
     numprocs = comm.Get_size()
 
-    if numprocs != 2:
-        if myid == 0:
-            errmsg = "This test requires exactly two processes"
-        else:
-            errmsg = None
-        raise SystemExit(errmsg)
-
     s_buf = allocate(MAX_MSG_SIZE)
     r_buf = allocate(MAX_MSG_SIZE)
 
     if myid == 0:
         print ('# %s' % (BENCHMARH,))
-    if myid == 0:
         print ('# %-8s%20s' % ("Size [B]", "Bandwidth [MB/s]"))
 
     message_sizes = [2**i for i in range(30)]
@@ -320,6 +296,13 @@ def allocate(n):
 
 if __name__ == '__main__':
     mvp_main()
-    osu_latency()
-    osu_bw()
-    osu_bibw()
+    comm = MPI.COMM_WORLD
+    myid = comm.Get_rank()
+    numprocs = comm.Get_size()
+    if numprocs==2 :
+        osu_latency()
+        osu_bw()
+        osu_bibw()
+    else:
+        if myid==0:
+            print ("OSU examples require exactly 2 compute nodes")
