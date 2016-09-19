@@ -35,10 +35,10 @@ the host system, so you can log into it to start your MPI applications.
 
 ## Usage
 
-The following command will start one `mpi_head` container and three `mpi_node` containers: 
+The following command, run from the repository's directory, will start one `mpi_head` container and three `mpi_node` containers: 
 
 ```
-$> docker-compose scale mpi_head=1 mpi_worker=3
+$> docker-compose scale mpi_head=1 mpi_node=3
 ```
 Once all containers are running, you can login into the `mpi_head` node and start MPI jobs with `mpirun`. Alternatively, you can execute a one-shot command on that container with the `docker-compose exec` syntax, as follows: 
 
