@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 
 RUN apt-get update -y && \
-    apt-get upgrade -y && \
+    apt-get install -y sudo && \
     apt-get install -y --no-install-recommends openssh-server python-mpi4py python-numpy python-virtualenv python-scipy \
         gcc gfortran openmpi-bin openmpi-common openmpi-doc binutils && \
     apt-get clean && apt-get purge && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
