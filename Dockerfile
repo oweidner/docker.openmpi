@@ -1,7 +1,7 @@
 # Build this image:  docker build -t mpi .
 #
 
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 # FROM phusion/baseimage
 
 MAINTAINER Ole Weidner <ole.weidner@ed.ac.uk>
@@ -13,8 +13,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 
 RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends openssh-server python-mpi4py python-numpy python-virtualenv python-scipy gcc gfortran openmpi-checkpoint binutils && \
+    apt-get install -y sudo && \
+    apt-get install -y --no-install-recommends openssh-server python-mpi4py python-numpy python-virtualenv python-scipy \
+        gcc gfortran openmpi-bin openmpi-common openmpi-doc binutils && \
     apt-get clean && apt-get purge && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir /var/run/sshd
