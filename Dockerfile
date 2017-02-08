@@ -13,9 +13,10 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 
 RUN apt-get update -y && \
-    apt-get install -y sudo && \
-    apt-get install -y --no-install-recommends openssh-server python-mpi4py python-numpy python-virtualenv python-scipy \
-        gcc gfortran openmpi-bin openmpi-common openmpi-doc binutils && \
+    apt-get install -y --no-install-recommends sudo apt-utils && \
+    apt-get install -y --no-install-recommends openssh-server \
+        python-dev python-numpy python-pip python-virtualenv python-scipy \
+        gcc gfortran libopenmpi-dev openmpi-bin openmpi-common openmpi-doc binutils && \
     apt-get clean && apt-get purge && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir /var/run/sshd
@@ -48,10 +49,12 @@ ADD ssh/id_rsa.mpi ${SSHDIR}/id_rsa
 ADD ssh/id_rsa.mpi.pub ${SSHDIR}/id_rsa.pub
 ADD ssh/id_rsa.mpi.pub ${SSHDIR}/authorized_keys
 
-
-
 RUN chmod -R 600 ${SSHDIR}* && \
     chown -R ${USER}:${USER} ${SSHDIR}
+
+RUN pip install --upgrade pip \
+    && pip install -U setuptools \
+    && pip install mpi4py
 
 # ------------------------------------------------------------
 # Copy MPI4PY example scripts
@@ -61,8 +64,6 @@ ENV TRIGGER 1
 
 ADD mpi4py_benchmarks ${HOME}/mpi4py_benchmarks
 RUN chown ${USER}:${USER} ${HOME}/mpi4py_benchmarks
-
-
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
