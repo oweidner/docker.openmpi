@@ -57,6 +57,19 @@ RUN pip install --upgrade pip \
     && pip install mpi4py
 
 # ------------------------------------------------------------
+# Configure OpenMPI
+# ------------------------------------------------------------
+
+RUN mkdir -p ${HOME}/.openmpi \
+  && touch ${HOME}/.openmpi/mca-params.conf \
+  && tee -a /home/mpirun/.openmpi/mca-params.conf <<EOF \
+    btl=tcp,self \
+    btl_tcp_if_include=eth0 \
+    plm_rsh_no_tree_spawn=1 \
+    EOF \
+  && chown ${USER}:${USER} ${HOME}/.openmpi
+
+# ------------------------------------------------------------
 # Copy MPI4PY example scripts
 # ------------------------------------------------------------
 
