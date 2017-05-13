@@ -60,14 +60,9 @@ RUN pip install --upgrade pip \
 # Configure OpenMPI
 # ------------------------------------------------------------
 
-RUN mkdir -p ${HOME}/.openmpi \
-  && touch ${HOME}/.openmpi/mca-params.conf \
-  && tee -a /home/mpirun/.openmpi/mca-params.conf <<EOF \
-    btl=tcp,self \
-    btl_tcp_if_include=eth0 \
-    plm_rsh_no_tree_spawn=1 \
-    EOF \
-  && chown ${USER}:${USER} ${HOME}/.openmpi
+RUN rm -fr ${HOME}/.openmpi && mkdir -p ${HOME}/.openmpi
+ADD default-mca-params.conf ${HOME}/.openmpi/mca-params.conf
+RUN chown -R ${USER}:${USER} ${HOME}/.openmpi
 
 # ------------------------------------------------------------
 # Copy MPI4PY example scripts
@@ -76,7 +71,7 @@ RUN mkdir -p ${HOME}/.openmpi \
 ENV TRIGGER 1
 
 ADD mpi4py_benchmarks ${HOME}/mpi4py_benchmarks
-RUN chown ${USER}:${USER} ${HOME}/mpi4py_benchmarks
+RUN chown -R ${USER}:${USER} ${HOME}/mpi4py_benchmarks
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
