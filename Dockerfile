@@ -1,7 +1,7 @@
 # Build this image:  docker build -t mpi .
 #
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 # FROM phusion/baseimage
 
 MAINTAINER Ole Weidner <ole.weidner@ed.ac.uk>
@@ -52,13 +52,17 @@ ADD ssh/id_rsa.mpi.pub ${SSHDIR}/authorized_keys
 RUN chmod -R 600 ${SSHDIR}* && \
     chown -R ${USER}:${USER} ${SSHDIR}
 
-RUN pip install --upgrade pip \
-    && pip install -U setuptools \
-    && pip install mpi4py
+RUN pip install --upgrade pip
+
+USER ${USER}
+RUN  pip install --user -U setuptools \
+    && pip install --user mpi4py
 
 # ------------------------------------------------------------
 # Configure OpenMPI
 # ------------------------------------------------------------
+
+USER root
 
 RUN rm -fr ${HOME}/.openmpi && mkdir -p ${HOME}/.openmpi
 ADD default-mca-params.conf ${HOME}/.openmpi/mca-params.conf
